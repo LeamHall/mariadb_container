@@ -1,0 +1,25 @@
+
+
+# At the moment this requires Python, SQLAlchemy, and the MariaDB connector.
+# If you don't have them installed, look at using a venv.
+
+# Turn on the venv
+
+source venv/bin/activate
+
+# Start the MariaDB container.
+
+docker run --detach --name my_mariadb --env MARIADB_USER=dba --env MARIADB_PASSWORD=my_cool_secret --env MARIADB_ROOT_PASSWORD=my_secret_pw  mariadb:latest
+
+# Start the client container
+docker run -it --rm mariadb mysql -h 172.17.0.2 -u root -p
+
+# In the client container, grant dba all privileges
+
+  # grant all PRIVILEGES on *.* to 'dba'@'%';
+
+# Run api.py to populate the DB
+
+python api.py
+
+
